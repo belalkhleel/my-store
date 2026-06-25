@@ -1,0 +1,66 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(10, 10, 15, 0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+
+.header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+}
+
+.header__logo {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: 0.05em;
+}
+
+.header__logo span {
+  color: var(--accent);
+}
+
+.header__nav {
+  display: flex;
+  gap: 32px;
+}
+
+.header__nav a {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-muted);
+  transition: var(--transition);
+  padding-bottom: 4px;
+  border-bottom: 2px solid transparent;
+}
+
+.header__nav a:hover,
+.header__nav a.active {
+  color: var(--text-primary);
+  border-bottom-color: var(--accent);
+  opacity: 1;
+}
+
+.header__cart {
+  position: relative;
+  color: var(--text-muted);
+  transition: var(--transition);
+}
+
+.header__cart:hover {
+  color: var(--accent);
+  opacity: 1;
+}
+
+.header__cart .badge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+}

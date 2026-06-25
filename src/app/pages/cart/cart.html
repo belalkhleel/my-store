@@ -1,0 +1,68 @@
+<section class="cart">
+  <div class="container">
+
+    <h1>Your Cart</h1>
+
+    <div class="cart__empty" *ngIf="items.length === 0">
+      <p>Your cart is empty.</p>
+      <a routerLink="/" class="btn btn-outline">Browse Products</a>
+    </div>
+
+    <div class="cart__inner" *ngIf="items.length > 0">
+
+      <div class="cart__items">
+        <div class="cart-item card" *ngFor="let item of items">
+
+          <img [src]="item.product.image" [alt]="item.product.name" class="cart-item__image"/>
+
+          <div class="cart-item__info">
+            <h3>{{ item.product.name }}</h3>
+            <p class="text-muted">{{ item.product.category }}</p>
+          </div>
+
+          <div class="cart-item__qty">
+            <input
+              type="number"
+              [value]="item.quantity"
+              min="1"
+              [max]="item.product.stock"
+              (change)="updateQuantity(item.product.id, $any($event.target).value)"
+            />
+          </div>
+
+          <p class="cart-item__price">${{ item.product.price * item.quantity }}</p>
+
+          <button class="btn btn-ghost cart-item__remove" (click)="remove(item.product.id)">
+            ✕
+          </button>
+
+        </div>
+      </div>
+
+      <div class="cart__summary card">
+        <h2>Order Summary</h2>
+        <hr class="divider"/>
+        <div class="cart__summary-row">
+          <span class="text-muted">Subtotal</span>
+          <span>${{ getTotal() }}</span>
+        </div>
+        <div class="cart__summary-row">
+          <span class="text-muted">Shipping</span>
+          <span class="text-accent">Free</span>
+        </div>
+        <hr class="divider"/>
+        <div class="cart__summary-row cart__summary-total">
+          <span>Total</span>
+          <span class="text-accent">${{ getTotal() }}</span>
+        </div>
+        <a routerLink="/checkout" class="btn btn-primary" style="width:100%; margin-top:16px;">
+          Proceed to Checkout
+        </a>
+        <a routerLink="/" class="btn btn-ghost" style="width:100%; margin-top:8px;">
+          Continue Shopping
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>

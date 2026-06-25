@@ -1,0 +1,41 @@
+<section class="product-detail" *ngIf="product">
+  <div class="container">
+
+    <a routerLink="/" class="back-link">← Back to Products</a>
+
+    <div class="product-detail__inner">
+
+      <div class="product-detail__image-wrap">
+        <img [src]="product.image" [alt]="product.name" />
+        <span class="product-card__category">{{ product.category }}</span>
+      </div>
+
+      <div class="product-detail__info">
+        <h1>{{ product.name }}</h1>
+        <p class="product-detail__price">${{ product.price }}</p>
+        <p class="product-detail__desc">{{ product.description }}</p>
+
+        <div class="product-detail__meta">
+          <span>⭐ {{ product.rating }} rating</span>
+          <span>{{ product.stock }} in stock</span>
+        </div>
+
+        <div class="product-detail__actions">
+          <div class="qty-wrap">
+            <label>Quantity</label>
+            <input
+              type="number"
+              [(ngModel)]="quantity"
+              min="1"
+              [max]="product.stock"
+            />
+          </div>
+          <button class="btn btn-primary" (click)="addToCart()">
+            Add to Cart
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
