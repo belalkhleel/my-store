@@ -1,59 +1,80 @@
 # MyStore
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.15.
+MyStore is an Angular e-commerce single-page application where users can browse products, view product details, add items to a shopping cart, and complete a checkout process.
 
-## Development server
+## App Flow
 
-To start a local development server, run:
+1. **Home / Product List** → User sees all products fetched from an external JSON API. Each product card shows the name, price, image, and an "Add to Cart" button with quantity selector.
+2. **Product Detail** → Clicking a product opens a detail page showing the full description, rating, stock, and an "Add to Cart" option.
+3. **Cart** → User reviews selected items, adjusts quantities, removes items, and sees the order total.
+4. **Checkout** → User fills in shipping and payment information. All fields are validated in real time with error messages.
+5. **Order Confirmation** → A success page is shown after a successful checkout.
+
+## Component Hierarchy
+
+```
+AppComponent (root)
+├── HeaderComponent — displays the navigation bar and cart icon with item count
+├── FooterComponent — displays the footer
+├── ProductListComponent (page) — fetches products via HttpClient and displays the grid
+│   └── ProductCardComponent (child) — displays a single product card
+│       @Input()  product  — receives product data from ProductListComponent
+│       @Output() addToCart — emits { product, quantity } back to ProductListComponent
+├── ProductDetailComponent (page) — shows full details of a single product
+├── CartComponent (page) — displays cart items, quantities, totals, and remove buttons
+├── CheckoutComponent (page) — checkout form with real-time validation using ngModelChange
+└── SuccessComponent (page) — order confirmation page shown after checkout
+```
+
+## Services
+
+- **ProductService** — fetches product data via `HttpClient` from `data.json`. Uses `shareReplay(1)` to cache the result and avoid multiple HTTP requests.
+- **CartService** — manages cart state using `BehaviorSubject`. Shared across components via Angular dependency injection. Provides methods to add, remove, update quantity, and clear the cart.
+
+## Data Sharing Between Components
+
+- **Parent → Child**: `@Input()` decorator — `ProductListComponent` passes each `product` to `ProductCardComponent`
+- **Child → Parent**: `@Output()` + `EventEmitter` — `ProductCardComponent` emits the `addToCart` event back to `ProductListComponent`
+- **Sibling components**: share data via `CartService` (e.g. `HeaderComponent` reads cart count, `CartComponent` reads cart items)
+
+## Key Features
+
+- Products fetched from external API using `HttpClient`
+- Real-time form validation with `ngModel` and `ngModelChange`
+- Feedback messages when items are added to or removed from the cart
+- Responsive product grid with quantity selector
+- Order confirmation page after successful checkout
+
+## Installation
+
+```bash
+npm install
+```
+
+## Running the App
 
 ```bash
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
+Navigate to `http://localhost:4200/`
 
 ## Building
-
-To build the project run:
 
 ```bash
 ng build
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Build artifacts will be stored in the `dist/` directory.
 
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+## Running Unit Tests
 
 ```bash
 ng test
 ```
 
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
 ## Additional Resources
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- [Angular CLI Overview](https://angular.dev/tools/cli)
+- [Angular HttpClient](https://angular.dev/guide/http)
+- [Angular Template-driven Forms](https://angular.dev/guide/forms)

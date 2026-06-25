@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CartService } from '../../services/cart';
 import { CartItem } from '../../models/cart-item.model';
+
 @Component({
   selector: 'app-cart',
   standalone: false,
@@ -10,6 +11,7 @@ import { CartItem } from '../../models/cart-item.model';
 export class Cart implements OnInit {
 
   items: CartItem[] = [];
+  feedbackMessage = '';  
 
   constructor(private cartService: CartService) {}
 
@@ -24,7 +26,12 @@ export class Cart implements OnInit {
   }
 
   remove(productId: number): void {
+    const item = this.items.find(i => i.product.id === productId);  
     this.cartService.removeFromCart(productId);
+    if (item) {                                                      
+      this.feedbackMessage = `"${item.product.name}" removed from cart.`;
+      setTimeout(() => this.feedbackMessage = '', 3000);
+    }
   }
 
   getTotal(): number {

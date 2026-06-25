@@ -6,35 +6,14 @@
       <p class="text-muted">Premium gear for your setup</p>
     </div>
 
-    <div class="product-grid">
-      <div class="card product-card" *ngFor="let product of products">
+    <div *ngIf="feedbackMessage" class="feedback-msg">{{ feedbackMessage }}</div>
 
-        <a [routerLink]="['/product', product.id]" class="product-card__image-wrap">
-          <img [src]="product.image" [alt]="product.name" class="product-card__image"/>
-          <span class="product-card__category">{{ product.category }}</span>
-        </a>
-
-        <div class="product-card__body">
-          <a [routerLink]="['/product', product.id]">
-            <h3 class="product-card__name">{{ product.name }}</h3>
-          </a>
-          <p class="product-card__price">${{ product.price }}</p>
-
-          <div class="product-card__actions">
-            <input
-              type="number"
-              [(ngModel)]="quantities[product.id]"
-              min="1"
-              [max]="product.stock"
-              class="product-card__qty"
-            />
-            <button class="btn btn-primary" (click)="addToCart(product)">
-              Add to Cart
-            </button>
-          </div>
-        </div>
-
-      </div>
+    <div class="product-grid" *ngIf="(products$ | async) as products">
+      <app-product-card
+        *ngFor="let product of products"
+        [product]="product"
+        (addToCart)="handleAddToCart($event)">
+      </app-product-card>
     </div>
 
   </div>

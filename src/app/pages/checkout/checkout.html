@@ -1,73 +1,50 @@
 <section class="checkout">
   <div class="container">
-
     <h1>Checkout</h1>
-
     <form #checkoutForm="ngForm" (ngSubmit)="onSubmit()" class="checkout__inner">
 
       <div class="checkout__form">
-
         <div class="form-section">
           <h2>Shipping Info</h2>
 
           <div class="form-group">
             <label for="name">Full Name</label>
-            <input
-              id="name"
-              type="text"
-              name="name"
-              [(ngModel)]="order.name"
-              required
-              placeholder="John Doe"
-            />
+            <input id="name" type="text" name="name"
+              [(ngModel)]="order.name" (ngModelChange)="validateName()"
+              required placeholder="John Doe" />
+            <p *ngIf="nameError" class="form-error">{{ nameError }}</p>
           </div>
 
           <div class="form-group">
             <label for="email">Email</label>
-            <input
-              id="email"
-              type="email"
-              name="email"
-              [(ngModel)]="order.email"
-              required
-              placeholder="john@example.com"
-            />
+            <input id="email" type="email" name="email"
+              [(ngModel)]="order.email" (ngModelChange)="validateEmail()"
+              required placeholder="john@example.com" />
+            <p *ngIf="emailError" class="form-error">{{ emailError }}</p>
           </div>
 
           <div class="form-group">
             <label for="address">Address</label>
-            <input
-              id="address"
-              type="text"
-              name="address"
-              [(ngModel)]="order.address"
-              required
-              placeholder="123 Main St"
-            />
+            <input id="address" type="text" name="address"
+              [(ngModel)]="order.address" (ngModelChange)="validateAddress()"
+              required placeholder="123 Main St" />
+            <p *ngIf="addressError" class="form-error">{{ addressError }}</p>
           </div>
 
           <div class="form-row">
             <div class="form-group">
               <label for="city">City</label>
-              <input
-                id="city"
-                type="text"
-                name="city"
-                [(ngModel)]="order.city"
-                required
-                placeholder="New York"
-              />
+              <input id="city" type="text" name="city"
+                [(ngModel)]="order.city" (ngModelChange)="validateCity()"
+                required placeholder="New York" />
+              <p *ngIf="cityError" class="form-error">{{ cityError }}</p>
             </div>
             <div class="form-group">
               <label for="zip">ZIP Code</label>
-              <input
-                id="zip"
-                type="text"
-                name="zip"
-                [(ngModel)]="order.zip"
-                required
-                placeholder="10001"
-              />
+              <input id="zip" type="text" name="zip"
+                [(ngModel)]="order.zip" (ngModelChange)="validateZip()"
+                required placeholder="10001" />
+              <p *ngIf="zipError" class="form-error">{{ zipError }}</p>
             </div>
           </div>
         </div>
@@ -77,45 +54,29 @@
 
           <div class="form-group">
             <label for="card">Card Number</label>
-            <input
-              id="card"
-              type="text"
-              name="card"
-              [(ngModel)]="order.card"
-              required
-              placeholder="1234 5678 9012 3456"
-              maxlength="19"
-            />
+            <input id="card" type="text" name="card"
+              [(ngModel)]="order.card" (ngModelChange)="validateCard()"
+              required placeholder="1234 5678 9012 3456" maxlength="19" />
+            <p *ngIf="cardError" class="form-error">{{ cardError }}</p>
           </div>
 
           <div class="form-row">
             <div class="form-group">
               <label for="expiry">Expiry Date</label>
-              <input
-                id="expiry"
-                type="text"
-                name="expiry"
-                [(ngModel)]="order.expiry"
-                required
-                placeholder="MM/YY"
-                maxlength="5"
-              />
+              <input id="expiry" type="text" name="expiry"
+                [(ngModel)]="order.expiry" (ngModelChange)="validateExpiry()"
+                required placeholder="MM/YY" maxlength="5" />
+              <p *ngIf="expiryError" class="form-error">{{ expiryError }}</p>
             </div>
             <div class="form-group">
               <label for="cvv">CVV</label>
-              <input
-                id="cvv"
-                type="text"
-                name="cvv"
-                [(ngModel)]="order.cvv"
-                required
-                placeholder="123"
-                maxlength="3"
-              />
+              <input id="cvv" type="text" name="cvv"
+                [(ngModel)]="order.cvv" (ngModelChange)="validateCvv()"
+                required placeholder="123" maxlength="3" />
+              <p *ngIf="cvvError" class="form-error">{{ cvvError }}</p>
             </div>
           </div>
         </div>
-
       </div>
 
       <div class="checkout__summary card">
@@ -134,13 +95,9 @@
           <span>Total</span>
           <span class="text-accent">${{ total }}</span>
         </div>
-
-        <button
-          type="submit"
-          class="btn btn-primary"
+        <button type="submit" class="btn btn-primary"
           style="width:100%; margin-top:24px;"
-          [disabled]="checkoutForm.invalid"
-        >
+          [disabled]="checkoutForm.invalid">
           Place Order
         </button>
       </div>

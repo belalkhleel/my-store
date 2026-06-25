@@ -1,1 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
+.feedback-msg {
+  background-color: #d4edda;
+  color: #155724;
+  padding: 10px 16px;
+  border-radius: 6px;
+  margin-bottom: 16px;
+  font-size: 0.95rem;
+}
